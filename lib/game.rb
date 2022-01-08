@@ -12,7 +12,15 @@ class Game
     if number == 1
       player_one.color = '🔴'
       player_two.color = '🟡'
+    elsif number == 2
+      player_one.color = '🟡'
+      player_two.color = '🔴'
     end
   end
+
+  def set_first_player
+    ['🔴','🟡'].sample
+  end
+
 
 end
