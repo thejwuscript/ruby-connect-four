@@ -179,17 +179,17 @@ describe Game do
   end
 
   describe '#player_move' do
-    context 'when user enters a valid move' do
+    context 'when player enters a valid move' do
       it 'stops loop and does not display error message' do
       end
     end
 
-    context 'when user enters an invalid move once then a valid move' do
+    context 'when player enters an invalid move once then a valid move' do
       it 'completes loop and displays error message once' do
       end
     end
   
-    context 'when user enters invalid move twice then a valid move' do
+    context 'when player enters invalid move twice then a valid move' do
       it 'completes loop and displays error message twice' do
       end
     end
