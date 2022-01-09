@@ -1,11 +1,14 @@
 #frozen_string_literal: true
 
 class Game
-  attr_reader :player_one, :player_two
+  attr_accessor :turn_count
+  attr_reader :player_one, :player_two, :grid
+  
   def initialize
     @grid = Grid.new
     @player_one = Player.new
     @player_two = Player.new
+    @turn_count = 0
   end
 
   def choose_color(number)
@@ -18,9 +21,16 @@ class Game
     end
   end
 
-  def set_first_player
-    ['🔴','🟡'].sample
+  def current_color_turn
+    if player_one.color == '🔴'
+      @turn_count.odd? ? '🔴' : '🟡'
+    else
+      @turn_count.odd? ? '🟡' : '🔴'
+    end
   end
 
+  def update_grid(color, coordinate)
+    grid.update_slots(color, coordinate)
+  end
 
 end
