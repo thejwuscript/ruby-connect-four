@@ -180,12 +180,28 @@ describe Game do
 
   describe '#player_move' do
     context 'when player enters a valid move' do
+      before do
+        valid_input = 'D5'
+        allow(:game).to receive(:gets).and_return(valid_input)
+      end
+    
       it 'stops loop and does not display error message' do
+        expect(:game).not_to receive(:puts)
+        game.player_move
       end
     end
 
     context 'when player enters an invalid move once then a valid move' do
+      before do
+        symbols = '@%'
+        valid = 'D1'
+        allow(:game).to receive(:gets).and_return(symbols, valid)
+      end
+    
       it 'completes loop and displays error message once' do
+        error_message = "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
+        expect(:game).to receive(:puts).with(error_message).once
+        game.player_move
       end
     end
   
