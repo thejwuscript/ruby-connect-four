@@ -33,4 +33,9 @@ class Game
     grid.update_slots(color, coordinate)
   end
 
+  def validate_move(input)
+    #player can only input 2 chars, A to G, then 1 to 6
+    return input if /^[A-G]{1}[1-6]{1}$/.match?(input) 
+  end
+
 end

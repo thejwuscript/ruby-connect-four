@@ -126,7 +126,7 @@ describe Game do
       game.instance_variable_set(:@grid, grid_update)
     end
 
-    context "Red picks a valid coordinate to play" do
+    context "if red picks a valid coordinate to play" do
       it 'sends update_slots to grid with color and coordinate info' do
         color = '🔴'
         coordinate = 'B3'
@@ -136,7 +136,65 @@ describe Game do
     end
   end
 
+  describe '#validate_move' do
+    context 'when given a valid input as an argument' do
+      it 'returns the input' do
+        input = 'C4'
+        result = game.validate_move(input)
+        expect(result).to eq('C4')
+      end
+    end
+
+    context 'when given two letters as argument' do
+      it 'returns nil' do
+        two_letters = 'MM'
+        result = game.validate_move(two_letters)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when given two digits as argument' do
+      it 'returns nil' do
+        two_digits = '24'
+        result = game.validate_move(two_digits)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when given three or more characters as argument' do
+      it 'returns nil' do
+        three_letters = 'A2B'
+        result = game.validate_move(three_letters)
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when given 1 character as an argument' do
+      it 'returns nil' do
+        one_letter = 'F'
+        result = game.validate_move(one_letter)
+        expect(result).to be_nil
+      end
+    end
+  end
+
+  describe '#player_move' do
+    context 'when user enters a valid move' do
+      it 'stops loop and does not display error message' do
+      end
+    end
+
+    context 'when user enters an invalid move once then a valid move' do
+      it 'completes loop and displays error message once' do
+      end
+    end
   
+    context 'when user enters invalid move twice then a valid move' do
+      it 'completes loop and displays error message twice' do
+      end
+    end
+  end
+      
 end
 
   
