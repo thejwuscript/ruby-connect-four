@@ -13,9 +13,22 @@ class Game
 
   def play_game
     assign_color(choose_color)
-    player_move
+    round
   end
 
+  def round
+    loop do
+      @turn_count += 1
+      move = player_move
+      update_grid(current_color_turn, move)
+      return if game_over?
+    end
+  end
+
+  def game_over?
+  end
+  
+  
   def choose_color
     puts "Choose your color. Enter '1' for red or '2' for yellow."
     loop do
@@ -46,11 +59,12 @@ class Game
   end
 
   def validate_move(input)
-    #player can only input 2 chars, A to G, then 1 to 6
+    return if grid.occupied?(input)
     return input if /^[A-G]{1}[1-6]{1}$/.match?(input) 
   end
 
   def player_move
+    puts 'Please enter a coordinate. (Example: D4)'
     loop do
       input = gets.chomp
       return input if validate_move(input)

@@ -145,6 +145,18 @@ describe Game do
       end
     end
 
+    context 'when given a move that is occupied' do
+      let(:occupied_slot) { instance_double(Grid) }
+      
+      it 'returns nil' do
+        game.instance_variable_set(:@grid, occupied_slot)
+        input = 'A5'
+        allow(occupied_slot).to receive(:occupied?).with(input).and_return(true)
+        result = game.validate_move(input)
+        expect(result).to be_nil
+      end
+    end 
+
     context 'when given two letters as argument' do
       it 'returns nil' do
         two_letters = 'MM'
@@ -179,6 +191,11 @@ describe Game do
   end
 
   describe '#player_move' do
+    before do
+      prompt = 'Please enter a coordinate. (Example: D4)'
+      allow(game).to receive(:puts).with(prompt).once
+    end
+  
     context 'when player enters a valid move' do
       before do
         valid_input = 'D5'
@@ -186,7 +203,8 @@ describe Game do
       end
     
       it 'stops loop and does not display error message' do
-        expect(game).not_to receive(:puts)
+        error_message = "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
+        expect(game).not_to receive(:puts).with(error_message)
         game.player_move
       end
     end

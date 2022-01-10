@@ -7,4 +7,7 @@ class Grid
   def update_slots(color, coordinate)
   end
 
+  def occupied?(coordinate)
+  end
+
 end
