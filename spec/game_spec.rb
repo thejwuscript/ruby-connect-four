@@ -16,7 +16,7 @@ describe Game do
     end
   end
 
-  describe '#choose_color' do
+  describe '#assign_color' do
     let(:player_red) { instance_double(Player) }
     let(:player_yellow) { instance_double(Player) }
     
@@ -25,14 +25,14 @@ describe Game do
         player_input = 1
         game.instance_variable_set(:@player_one, player_red)
         expect(player_red).to receive(:color=).with('🔴')
-        game.choose_color(player_input)
+        game.assign_color(player_input)
       end
 
       it 'sends color= with yellow to player_two' do
         player_input = 1
         game.instance_variable_set(:@player_two, player_yellow)
         expect(player_yellow).to receive(:color=).with('🟡')
-        game.choose_color(player_input)
+        game.assign_color(player_input)
       end
     end
 
@@ -41,14 +41,14 @@ describe Game do
         player_input = 2
         game.instance_variable_set(:@player_one, player_yellow)
         expect(player_yellow).to receive(:color=).with('🟡')
-        game.choose_color(player_input)
+        game.assign_color(player_input)
       end
 
       it 'sends color= with red to player_two' do
         player_input = 2
         game.instance_variable_set(:@player_two, player_red)
         expect(player_red).to receive(:color=).with('🔴')
-        game.choose_color(player_input)
+        game.assign_color(player_input)
       end
     end
   end
@@ -220,6 +220,46 @@ describe Game do
       end
     end
   end
+
+  describe '#choose_color' do
+    context 'when player inputs 1 or 2' do   
+      before do
+        prompt = "Choose your color. Enter '1' for red or '2' for yellow."
+        allow(game).to receive(:puts).with(prompt)
+      end
+    
+      it 'returns 1' do
+        input = '1'
+        allow(game).to receive(:gets).and_return(input)
+        result = game.choose_color
+        expect(result).to eql(1)
+      end
+
+      it 'returns 2' do
+        input = '2'
+        allow(game).to receive(:gets).and_return(input)
+        result = game.choose_color
+        expect(result).to eql(2)
+      end
+    end
+
+    context 'when player entry is invalid once' do
+      before do
+        three = '3'
+        two = '2'
+        allow(game).to receive(:gets).and_return(three, two)
+        prompt = "Choose your color. Enter '1' for red or '2' for yellow."
+        allow(game).to receive(:puts).with(prompt).once
+      end
+    
+      it 'completes loop and displays error message once' do
+        error_message = "Invalid entry. Please enter '1' or '2'."
+        expect(game).to receive(:puts).with(error_message).once
+        game.choose_color
+      end
+    end
+  end
+
       
 end
 
