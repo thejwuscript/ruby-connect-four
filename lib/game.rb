@@ -11,22 +11,22 @@ class Game
     @turn_count = 0
   end
 
-  def play_game
-    assign_color(choose_color)
-    round
-  end
+  #def play_game
+  #  assign_color(choose_color)
+  #  round
+  #end
 
-  def round
-    loop do
-      @turn_count += 1
-      move = player_move
-      update_grid(current_color_turn, move)
-      return if game_over?
-    end
-  end
+  #def round
+  #  loop do
+  #    @turn_count += 1
+  #    move = player_move
+  #    update_grid(current_color_turn, move)
+  #    return if game_over?
+  #  end
+  #end
 
-  def game_over?
-  end
+  #def game_over?
+  #end
   
   
   def choose_color
