@@ -9,6 +9,8 @@ class Grid
   end
 
   def update_slots(color, coordinate)
+    position = input_to_grid_position(coordinate)
+    place_color_in_slot(color, position)
   end
 
   def occupied?(coordinate)
@@ -20,10 +22,30 @@ class Grid
     grid_position = [x_coordinate, y_coordinate]
   end
 
-  def place_color_in_slot(color, coordinate)
-    x = coordinate[0]
-    y = coordinate[1]
+  def place_color_in_slot(color, grid_position)
+    x = grid_position[0]
+    y = grid_position[1]
     self.slots_layout[y][x] = color
+  end
+
+  def show_grid
+    puts <<~HEREDOC
+
+         |---+---+---+---+---+---+---|
+      6  | #{@slots_layout[-6].join(' | ')} |
+         |---+---+---+---+---+---+---|
+      5  | #{@slots_layout[-5].join(' | ')} |
+         |---+---+---+---+---+---+---| 
+      4  | #{@slots_layout[-4].join(' | ')} |
+         |---+---+---+---+---+---+---|
+      3  | #{@slots_layout[-3].join(' | ')} |
+         |---+---+---+---+---+---+---|
+      2  | #{@slots_layout[-2].join(' | ')} |
+         |---+---+---+---+---+---+---|
+      1  | #{@slots_layout[-1].join(' | ')} |
+         |---+---+---+---+---+---+---|
+           A   B   C   D   E   F   G  
+    HEREDOC
   end
 
 end

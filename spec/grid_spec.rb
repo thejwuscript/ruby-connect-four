@@ -32,7 +32,7 @@ describe Grid do
   end
 
   describe '#place_color_in_slot' do
-    it 'Takes two arguments, use them to find the correct nested array index and place color there' do
+    it 'place color in the specified slot' do
       color = '🔴'
       grid_position = [1, -3]
       grid.place_color_in_slot(color, grid_position)
