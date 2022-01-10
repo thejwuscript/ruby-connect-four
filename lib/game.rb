@@ -12,13 +12,9 @@ class Game
   end
 
   def choose_color(number)
-    if number == 1
-      player_one.color = '🔴'
-      player_two.color = '🟡'
-    elsif number == 2
-      player_one.color = '🟡'
-      player_two.color = '🔴'
-    end
+    colors = ['🔴', '🟡']
+    player_one.color = number == 1 ? colors.shift : colors.pop
+    player_two.color = colors.pop
   end
 
   def current_color_turn
