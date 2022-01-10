@@ -152,6 +152,7 @@ describe Game do
         game.instance_variable_set(:@grid, occupied_slot)
         input = 'A5'
         allow(occupied_slot).to receive(:occupied?).with(input).and_return(true)
+        allow(game).to receive(:puts).with('Slot occupied! Try again.').once
         result = game.validate_move(input)
         expect(result).to be_nil
       end
@@ -160,6 +161,8 @@ describe Game do
     context 'when given two letters as argument' do
       it 'returns nil' do
         two_letters = 'MM'
+        error_message = 'Invalid entry. Please enter a letter A to G and a digit 1 to 6.'
+        allow(game).to receive(:puts).with(error_message).once
         result = game.validate_move(two_letters)
         expect(result).to be_nil
       end
@@ -168,6 +171,8 @@ describe Game do
     context 'when given two digits as argument' do
       it 'returns nil' do
         two_digits = '24'
+        error_message = 'Invalid entry. Please enter a letter A to G and a digit 1 to 6.'
+        allow(game).to receive(:puts).with(error_message).once
         result = game.validate_move(two_digits)
         expect(result).to be_nil
       end
@@ -176,6 +181,8 @@ describe Game do
     context 'when given three or more characters as argument' do
       it 'returns nil' do
         three_letters = 'A2B'
+        error_message = 'Invalid entry. Please enter a letter A to G and a digit 1 to 6.'
+        allow(game).to receive(:puts).with(error_message).once
         result = game.validate_move(three_letters)
         expect(result).to be_nil
       end
@@ -184,6 +191,8 @@ describe Game do
     context 'when given 1 character as an argument' do
       it 'returns nil' do
         one_letter = 'F'
+        error_message = 'Invalid entry. Please enter a letter A to G and a digit 1 to 6.'
+        allow(game).to receive(:puts).with(error_message).once
         result = game.validate_move(one_letter)
         expect(result).to be_nil
       end
@@ -203,7 +212,7 @@ describe Game do
       end
     
       it 'stops loop and does not display error message' do
-        error_message = "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
+        error_message = "Invalid entry. Please enter a letter A to G and a digit 1 to 6."
         expect(game).not_to receive(:puts).with(error_message)
         game.player_move
       end
@@ -217,7 +226,7 @@ describe Game do
       end
     
       it 'completes loop and displays error message once' do
-        error_message = "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
+        error_message = "Invalid entry. Please enter a letter A to G and a digit 1 to 6."
         expect(game).to receive(:puts).with(error_message).once
         game.player_move
       end
@@ -232,7 +241,7 @@ describe Game do
       end
     
       it 'completes loop and displays error message twice' do
-        error_message = "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
+        error_message = "Invalid entry. Please enter a letter A to G and a digit 1 to 6."
         expect(game).to receive(:puts).with(error_message).twice
         game.player_move
       end
