@@ -59,8 +59,9 @@ class Game
   end
 
   def validate_move(input)
-    return if grid.occupied?(input)
-    return input if /^[A-G]{1}[1-6]{1}$/.match?(input) 
+    return puts "Slot occupied! Try again." if grid.occupied?(input)
+    message = "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
+    /^[A-G]{1}[1-6]{1}$/.match?(input) ? input : puts(message)
   end
 
   def player_move
@@ -68,8 +69,6 @@ class Game
     loop do
       input = gets.chomp
       return input if validate_move(input)
-
-      puts "Invalid entry. Please enter a letter from A to G and a digit from 1 to 6."
     end
   end
 
