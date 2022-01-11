@@ -157,12 +157,26 @@ describe Grid do
     end
 
     context 'if mixed colors diagonally' do
+      subject(:colors_diagonal) { described_class.new }
+      
       it 'returns nil' do
+        for i in 0..2 do
+          colors_diagonal.slots_layout[0+i][2+i] = '🔴'
+        end
+        colors_diagonal.slots_layout[3][5] = '🟡'
+        result = colors_diagonal.four_diagonal
+        expect(result).to be_nil
       end
     end
 
     context 'if mixed spaces and colors diagonally' do
+      subject(:mixed_diagonal) { described_class.new }
+      
       it 'returns nil' do
+        mixed_diagonal.slots_layout[2][1] = '🔴'
+        mixed_diagonal.slots_layout[4][3] = '🟡'
+        result = mixed_diagonal.four_diagonal
+        expect(result).to be_nil
       end
     end
   end
