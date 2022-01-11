@@ -73,4 +73,20 @@ class Grid
     nil
   end
 
+  def four_diagonal
+    start_positions = [[2,0], [1,0], [0,0], [0,1], [0,2], [0,3]]
+    start_positions.each do |elem|
+      ary = []
+      for i in 0..6
+        a,b = elem
+        a = a + i
+        b = b + i
+        next if a > 5 || b > 6
+        ary << slots_layout[a][b]
+      end
+      ary.each_cons(4) {|a| return a[0] if a.all?('🔴') || a.all?('🟡') }
+    end
+    nil
+  end
+
 end

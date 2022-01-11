@@ -142,4 +142,29 @@ describe Grid do
       end
     end
   end
+
+  describe '#four_diagonal' do
+    context 'if there are four colors diagonally' do
+      subject(:reds_diagonal) { described_class.new }
+      
+      it 'returns the color' do
+        for i in 0..3 do
+          reds_diagonal.slots_layout[1+i][0+i] = '🔴'
+        end
+        result = reds_diagonal.four_diagonal
+        expect(result).to eq('🔴')
+      end
+    end
+
+    context 'if mixed colors diagonally' do
+      it 'returns nil' do
+      end
+    end
+
+    context 'if mixed spaces and colors diagonally' do
+      it 'returns nil' do
+      end
+    end
+  end
+
 end
