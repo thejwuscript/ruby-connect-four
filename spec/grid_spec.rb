@@ -113,12 +113,32 @@ describe Grid do
     end
 
     context 'if mixed colors in a column' do
+      subject(:two_colors_column) { described_class.new }
+      
+      before do
+        for i in 0..2 do
+          two_colors_column.slots_layout[i][1] = '🔴'
+        end
+        two_colors_column.slots_layout[3][1] = '🟡'
+      end
+    
       it 'returns nil' do
+        result = two_colors_column.four_vertical
+        expect(result).to be_nil
       end
     end
 
     context 'if mixed spaces and colors in a column' do
+      subject(:mixed_column) { described_class.new }
+
+      before do
+        mixed_column.slots_layout[3][3] = '🔴'
+        mixed_column.slots_layout[4][3] = '🟡'
+      end
+    
       it 'returns nil' do
+        result = mixed_column.four_vertical
+        expect(result).to be_nil
       end
     end
   end

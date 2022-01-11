@@ -70,6 +70,7 @@ class Grid
       end
     temp.each_cons(4) {|a| return a[0] if a.all?('🔴') || a.all?('🟡') }
     end
+    nil
   end
 
 end
