@@ -66,17 +66,32 @@ describe Grid do
 
   describe '#four_in_a_row' do
     context 'when 4 colors are in a row' do
-      subject(:four_red_grid) { described_class.new }
+      subject(:four_red) { described_class.new }
       
       it 'returns the color' do
-        four_red_grid.slots_layout[2][1..4] = %w[🔴 🔴 🔴 🔴]
-        color = four_red_grid.four_in_a_row
+        four_red.slots_layout[2][1..4] = %w[🔴 🔴 🔴 🔴]
+        color = four_red.four_in_a_row
         expect(color).to eq('🔴')
       end
     end
 
     context 'when 4 colors are not in a row' do
+      subject(:two_colors) { described_class.new }
+      
       it 'returns nil' do
+        two_colors.slots_layout[3][3..6] = %w[🔴 🟡 🔴 🟡]
+        result = two_colors.four_in_a_row
+        expect(result).to be_nil
+      end
+    end
+
+    context 'when empty spaces and colors' do
+      subject(:mixed) { described_class.new }
+      
+      it 'returns nil' do
+        mixed.slots_layout[4][1..4] = ['🔴', ' ', '🟡', ' ']
+        result = mixed.four_in_a_row
+        expect(result).to be_nil
       end
     end
   end

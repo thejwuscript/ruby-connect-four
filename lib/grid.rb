@@ -55,9 +55,11 @@ class Grid
   def four_in_a_row
     slots_layout.each do |row|
       4.times do |i|
-        return row[i] if row[i..i+3].all?('🔴' || '🟡')
+        return row[i] if row[i..i+3].all?('🔴')
+        return row[i] if row[i..i+3].all?('🟡')
       end
     end
+    nil
   end
 
 
