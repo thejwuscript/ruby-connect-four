@@ -95,4 +95,31 @@ describe Grid do
       end
     end
   end
+
+  describe '#four_vertical' do
+    context 'if 4 colors in a column' do
+      subject(:color_column) { described_class.new }
+
+      before do
+        for i in 2..5 do
+          color_column.slots_layout[i][3] = '🔴'
+        end
+      end
+    
+      it 'returns the color' do
+        result = color_column.four_vertical
+        expect(result).to eq('🔴')
+      end
+    end
+
+    context 'if mixed colors in a column' do
+      it 'returns nil' do
+      end
+    end
+
+    context 'if mixed spaces and colors in a column' do
+      it 'returns nil' do
+      end
+    end
+  end
 end

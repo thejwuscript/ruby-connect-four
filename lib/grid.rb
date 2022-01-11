@@ -62,5 +62,14 @@ class Grid
     nil
   end
 
+  def four_vertical
+    for i in 0..6 do
+      temp = [] 
+      for j in 0..5 do
+        temp << slots_layout[j][i]
+      end
+    temp.each_cons(4) {|a| return a[0] if a.all?('🔴') || a.all?('🟡') }
+    end
+  end
 
 end
