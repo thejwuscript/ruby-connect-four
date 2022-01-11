@@ -52,4 +52,13 @@ class Grid
     HEREDOC
   end
 
+  def four_in_a_row
+    slots_layout.each do |row|
+      4.times do |i|
+        return row[i] if row[i..i+3].all?('🔴' || '🟡')
+      end
+    end
+  end
+
+
 end
