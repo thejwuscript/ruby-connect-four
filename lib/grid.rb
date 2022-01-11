@@ -13,7 +13,11 @@ class Grid
     place_color_in_slot(color, position)
   end
 
-  def occupied?(coordinate)
+  def occupied?(input)
+    array = input_to_grid_position(input)
+    x = array[0]
+    y = array[1]
+    slots_layout[y][x] != ' ' ? true : false
   end
 
   def input_to_grid_position(coordinate)

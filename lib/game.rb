@@ -59,9 +59,14 @@ class Game
   end
 
   def validate_move(input)
-    return puts "Slot occupied! Try again." if grid.occupied?(input)
-    message = "Invalid entry. Please enter a letter A to G and a digit 1 to 6."
-    /^[A-G]{1}[1-6]{1}$/.match?(input) ? input : puts(message)
+    message = "Invalid entry. Please enter a valid coordinate."
+    if /^[A-G]{1}[1-6]{1}$/.match?(input) == false
+      return puts(message)
+    elsif grid.occupied?(input)
+      return puts "Slot occupied! Try again."
+    else
+      input
+    end
   end
 
   def player_move

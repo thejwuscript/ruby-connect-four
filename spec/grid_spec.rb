@@ -39,9 +39,31 @@ describe Grid do
       slot = grid.slots_layout[-3][1]
       expect(slot).to eq(color)
     end
-  
   end
 
-    
+  describe '#occupied?' do
+    context 'when the slot is either red or yellow' do
+      subject(:occupied_grid) { described_class.new }
+      
+      it 'returns true' do
+        player_input = 'E5'
+        occupied_grid.slots_layout[-5][4] = '🔴'
+        result = occupied_grid.occupied?(player_input)
+        expect(result).to be true
+      end
+    end
+
+    context 'when the slot is empty' do
+      subject(:empty_grid) { described_class.new }
+      
+      it 'returns false' do
+        player_input = 'F2'
+        result = empty_grid.occupied?(player_input)
+        expect(result).to be false
+      end
+    end
+  end
+
+  describe '#four_in_a_row?' do
 
 end
