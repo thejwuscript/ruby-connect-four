@@ -181,7 +181,8 @@ describe Game do
 
   describe '#player_move' do
     before do
-      prompt = 'Please enter a letter.'
+      prompt = "🔴 turn to play. Please enter a letter."
+      allow(game).to receive(:current_color_turn).and_return('🔴')
       allow(game).to receive(:puts).with(prompt).once
     end
   
@@ -192,6 +193,7 @@ describe Game do
       end
     
       it 'stops loop and does not display error message' do
+        
         error_message = "Invalid entry. Please try again."
         expect(game).not_to receive(:puts).with(error_message)
         game.player_move

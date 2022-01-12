@@ -78,7 +78,7 @@ class Game
   end
 
   def player_move
-    puts 'Please enter a letter.'
+    puts "#{current_color_turn} turn to play. Please enter a letter."
     loop do
       input = gets.chomp.upcase
       coordinate = validate_move(input)

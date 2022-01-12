@@ -33,6 +33,7 @@ class Grid
   end
 
   def show_grid
+    system('clear')
     puts <<~HEREDOC
                       \e[1mCONNECT \e[31m4\e[0m\e[22m
 
@@ -50,6 +51,7 @@ class Grid
         | #{@slots_layout[-1].join(' | ')} |
         |----+----+----+----+----+----+----|
            A    B    C    D    E    F    G  
+
     HEREDOC
   end
 
