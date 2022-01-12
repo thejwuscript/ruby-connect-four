@@ -4,8 +4,6 @@ require_relative 'player'
 
 Game.new.play_game
 
-# Bugs
-
-# 1) Player can choose anywhere to play.
-# 2) Unicode symbols too big.
+# Missing Feature
+#   Tell who's turn it is
 

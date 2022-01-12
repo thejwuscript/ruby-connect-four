@@ -70,7 +70,7 @@ class Game
     
     column = LETTERS.index(input)
     -1.downto(-6) do |i|
-      next unless grid.slots_layout[i][column] == ' '
+      next unless grid.slots_layout[i][column] == '  '
       
       return "#{input}#{-i}"
     end

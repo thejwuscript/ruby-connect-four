@@ -5,7 +5,7 @@ class Grid
   LETTERS = %w[A B C D E F G]
   
   def initialize
-    @slots_layout = Array.new(6) { Array.new(7, ' ') }
+    @slots_layout = Array.new(6) { Array.new(7, '  ') }
   end
 
   def update_slots(color, coordinate)
@@ -17,7 +17,7 @@ class Grid
     array = input_to_grid_position(input)
     x = array[0]
     y = array[1]
-    slots_layout[y][x] != ' ' ? true : false
+    slots_layout[y][x] != '  ' ? true : false
   end
 
   def input_to_grid_position(coordinate)
@@ -34,21 +34,22 @@ class Grid
 
   def show_grid
     puts <<~HEREDOC
+                      \e[1mCONNECT \e[31m4\e[0m\e[22m
 
-         |---+---+---+---+---+---+---|
-      6  | #{@slots_layout[-6].join(' | ')} |
-         |---+---+---+---+---+---+---|
-      5  | #{@slots_layout[-5].join(' | ')} |
-         |---+---+---+---+---+---+---| 
-      4  | #{@slots_layout[-4].join(' | ')} |
-         |---+---+---+---+---+---+---|
-      3  | #{@slots_layout[-3].join(' | ')} |
-         |---+---+---+---+---+---+---|
-      2  | #{@slots_layout[-2].join(' | ')} |
-         |---+---+---+---+---+---+---|
-      1  | #{@slots_layout[-1].join(' | ')} |
-         |---+---+---+---+---+---+---|
-           A   B   C   D   E   F   G  
+        |----+----+----+----+----+----+----|
+        | #{@slots_layout[-6].join(' | ')} |
+        |----+----+----+----+----+----+----|
+        | #{@slots_layout[-5].join(' | ')} |
+        |----+----+----+----+----+----+----| 
+        | #{@slots_layout[-4].join(' | ')} |
+        |----+----+----+----+----+----+----|
+        | #{@slots_layout[-3].join(' | ')} |
+        |----+----+----+----+----+----+----|
+        | #{@slots_layout[-2].join(' | ')} |
+        |----+----+----+----+----+----+----|
+        | #{@slots_layout[-1].join(' | ')} |
+        |----+----+----+----+----+----+----|
+           A    B    C    D    E    F    G  
     HEREDOC
   end
 
