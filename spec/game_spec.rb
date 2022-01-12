@@ -185,7 +185,7 @@ describe Game do
 
   describe '#player_move' do
     before do
-      prompt = "🔴 turn to play. Please enter a letter."
+      prompt = "🔴 turn to play. Please enter a letter from A to G."
       allow(game).to receive(:current_color_turn).and_return('🔴')
       allow(game).to receive(:puts).with(prompt).once
     end
@@ -279,10 +279,10 @@ describe Game do
     before do
       allow(judge_grid).to receive(:four_in_a_row)
       allow(judge_grid).to receive(:four_vertical)
-      allow(judge_grid).to receive(:four_diagonal)
+      allow(judge_grid).to receive(:four_diagonal_right)
+      allow(judge_grid).to receive(:four_diagonal_left)
     end
       
-    
     context 'when red has 4 in a row' do
       it 'returns true' do
         game.instance_variable_set(:@grid, judge_grid)
@@ -299,10 +299,18 @@ describe Game do
       end
     end
 
-    context 'when yellow has 4 in a diagonal' do
+    context 'when yellow has 4 in a diagonal to the right' do
       it 'returns true' do
         game.instance_variable_set(:@grid, judge_grid)
-        allow(judge_grid).to receive(:four_diagonal).and_return('🟡')
+        allow(judge_grid).to receive(:four_diagonal_right).and_return('🟡')
+        expect(game).to be_game_over
+      end
+    end
+
+    context 'when yellow has 4 in a diagonal to the left' do
+      it 'returns true' do
+        game.instance_variable_set(:@grid, judge_grid)
+        allow(judge_grid).to receive(:four_diagonal_left).and_return('🟡')
         expect(game).to be_game_over
       end
     end
