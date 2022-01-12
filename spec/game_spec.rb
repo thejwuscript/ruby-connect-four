@@ -19,6 +19,10 @@ describe Game do
   describe '#assign_color' do
     let(:player_red) { instance_double(Player) }
     let(:player_yellow) { instance_double(Player) }
+
+    before do
+      allow(game).to receive(:assignment_message)
+    end
     
     context 'when player chooses 1' do
       it 'sends color= with red to player_one' do
@@ -233,7 +237,7 @@ describe Game do
   describe '#choose_color' do
     context 'when player inputs 1 or 2' do   
       before do
-        prompt = "Choose your color. Enter '1' for red or '2' for yellow."
+        prompt = "Player One, choose your color. Enter '1' for red or '2' for yellow."
         allow(game).to receive(:puts).with(prompt)
       end
     
@@ -257,7 +261,7 @@ describe Game do
         three = '3'
         two = '2'
         allow(game).to receive(:gets).and_return(three, two)
-        prompt = "Choose your color. Enter '1' for red or '2' for yellow."
+        prompt = "Player One, choose your color. Enter '1' for red or '2' for yellow."
         allow(game).to receive(:puts).with(prompt).once
       end
     

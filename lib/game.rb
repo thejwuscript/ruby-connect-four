@@ -12,6 +12,13 @@ class Game
     @turn_count = 0
   end
 
+  def begin_game
+    system('clear')
+    puts "Welcome to \e[1mCONNECT \e[31m4\e[0m\e[22m."
+    puts ''
+    play_game
+  end
+    
   def play_game
     assign_color(choose_color)
     grid.show_grid
@@ -37,7 +44,7 @@ class Game
   end
   
   def choose_color
-    puts "Choose your color. Enter '1' for red or '2' for yellow."
+    puts "Player One, choose your color. Enter '1' for red or '2' for yellow."
     loop do
       input = gets.chomp
       return input.to_i if /^[1-2]{1}$/.match?(input)
@@ -51,7 +58,24 @@ class Game
     colors = ['🔴', '🟡']
     player_one.color = number == 1 ? colors.shift : colors.pop
     player_two.color = colors.pop
+    assignment_message
   end
+
+  def assignment_message
+    puts ''
+    puts "Player One is #{player_one.color}. Player Two is #{player_two.color}."
+    puts "Player One goes first. Game Start!"
+    sleep 2
+    countdown
+  end
+
+  def countdown
+    3.downto(1) do |i|
+      print "Loading...#{i}"
+      sleep 1
+      print "\r"
+    end
+  end 
 
   def current_color_turn
     if player_one.color == '🔴'
