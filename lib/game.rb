@@ -37,10 +37,12 @@ class Game
   end
 
   def game_over?
-    return true if grid.four_in_a_row
-    return true if grid.four_vertical
-    return true if grid.four_diagonal
-    return true if turn_count == 42
+    return true if
+      grid.four_in_a_row ||
+      grid.four_vertical ||
+      grid.four_diagonal_left ||
+      grid.four_diagonal_right ||
+      turn_count == 42
   end
   
   def choose_color
@@ -53,7 +55,6 @@ class Game
     end
   end
 
-
   def assign_color(number)
     colors = ['🔴', '🟡']
     player_one.color = number == 1 ? colors.shift : colors.pop
@@ -63,8 +64,10 @@ class Game
 
   def assignment_message
     puts ''
-    puts "Player One is #{player_one.color}. Player Two is #{player_two.color}."
-    puts "Player One goes first. Game Start!"
+    puts "Player One is #{player_one.color}."
+    puts "Player Two is #{player_two.color}."
+    puts ''
+    puts "Player One #{player_one.color} goes first. Game Start!"
     sleep 2
     countdown
   end
@@ -113,7 +116,11 @@ class Game
   end
 
   def game_end
-    if color = grid.four_in_a_row || grid.four_vertical || grid.four_diagonal
+    if color = 
+      grid.four_in_a_row || 
+      grid.four_vertical || 
+      grid.four_diagonal_left || 
+      grid.four_diagonal_right
       puts "Congrats, #{color} wins the game!"
     elsif turn_count == 42
       puts "It's a draw!"
