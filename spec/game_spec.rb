@@ -137,8 +137,6 @@ describe Game do
   end
 
   describe '#validate_move' do
-    let(:validate_grid) { double(Grid) }
-    
     context 'when given a letter corresponding to a column' do
       context 'when the column is not full' do
         input = 'C'
@@ -150,7 +148,7 @@ describe Game do
         end
         it 'returns a valid coordinate' do
           result = game.validate_move(input)
-          expect(result).to eq('C2')
+          expect(result).to eq('C4')
         end
       end
 

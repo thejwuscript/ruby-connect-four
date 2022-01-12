@@ -69,10 +69,10 @@ class Game
     return nil unless /^[A-G]{1}$/.match?(input)
     
     column = LETTERS.index(input)
-    0.upto(5) do |i|
+    -1.downto(-6) do |i|
       next unless grid.slots_layout[i][column] == ' '
       
-      return "#{input}#{i}"
+      return "#{input}#{-i}"
     end
     nil
   end
