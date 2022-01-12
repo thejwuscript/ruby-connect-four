@@ -137,63 +137,45 @@ describe Game do
   end
 
   describe '#validate_move' do
-    context 'when given a valid input as an argument' do
-      it 'returns the input' do
-        input = 'C4'
+    let(:validate_grid) { double(Grid) }
+    
+    context 'when given a letter corresponding to a column' do
+      context 'when the column is not full' do
+        input = 'C'
+        before do
+          game.instance_variable_set(:@grid, temp = Grid.new)
+          for i in 3..5
+            temp.slots_layout[i][2] = '🔴'
+          end
+        end
+        it 'returns a valid coordinate' do
+          result = game.validate_move(input)
+          expect(result).to eq('C2')
+        end
+      end
+
+      context 'when the column is full' do
+        input = 'C'
+        before do
+          game.instance_variable_set(:@grid, temp = Grid.new)
+          for i in 0..5
+            temp.slots_layout[i][2] = '🔴'
+          end
+        end
+        it 'returns nil' do
+          result = game.validate_move(input)
+          expect(result).to be_nil
+        end
+      end
+    end
+
+    context 'when given any string not coorresponding to a column' do
+      input = 'P'
+      before do
+        game.instance_variable_set(:@grid, temp = Grid.new)
+      end
+      it 'returns nil' do
         result = game.validate_move(input)
-        expect(result).to eq('C4')
-      end
-    end
-
-    context 'when given a move that is occupied' do
-      let(:occupied_slot) { instance_double(Grid) }
-      
-      it 'returns nil' do
-        game.instance_variable_set(:@grid, occupied_slot)
-        input = 'A5'
-        allow(occupied_slot).to receive(:occupied?).with(input).and_return(true)
-        allow(game).to receive(:puts).with('Slot occupied! Try again.').once
-        result = game.validate_move(input)
-        expect(result).to be_nil
-      end
-    end 
-
-    context 'when given two letters as argument' do
-      it 'returns nil' do
-        two_letters = 'MM'
-        error_message = "Invalid entry. Please enter a valid coordinate."
-        allow(game).to receive(:puts).with(error_message).once
-        result = game.validate_move(two_letters)
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when given two digits as argument' do
-      it 'returns nil' do
-        two_digits = '24'
-        error_message = "Invalid entry. Please enter a valid coordinate."
-        allow(game).to receive(:puts).with(error_message).once
-        result = game.validate_move(two_digits)
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when given three or more characters as argument' do
-      it 'returns nil' do
-        three_letters = 'A2B'
-        error_message = "Invalid entry. Please enter a valid coordinate."
-        allow(game).to receive(:puts).with(error_message).once
-        result = game.validate_move(three_letters)
-        expect(result).to be_nil
-      end
-    end
-
-    context 'when given 1 character as an argument' do
-      it 'returns nil' do
-        one_letter = 'F'
-        error_message = "Invalid entry. Please enter a valid coordinate."
-        allow(game).to receive(:puts).with(error_message).once
-        result = game.validate_move(one_letter)
         expect(result).to be_nil
       end
     end
@@ -201,18 +183,18 @@ describe Game do
 
   describe '#player_move' do
     before do
-      prompt = 'Please enter a coordinate. (Example: D4)'
+      prompt = 'Please enter a letter.'
       allow(game).to receive(:puts).with(prompt).once
     end
   
     context 'when player enters a valid move' do
       before do
-        valid_input = 'D5'
+        valid_input = 'D'
         allow(game).to receive(:gets).and_return(valid_input)
       end
     
       it 'stops loop and does not display error message' do
-        error_message = "Invalid entry. Please enter a letter A to G and a digit 1 to 6."
+        error_message = "Invalid entry. Please try again."
         expect(game).not_to receive(:puts).with(error_message)
         game.player_move
       end
@@ -221,12 +203,12 @@ describe Game do
     context 'when player enters an invalid move once then a valid move' do
       before do
         symbols = '@%'
-        valid = 'D1'
+        valid = 'B'
         allow(game).to receive(:gets).and_return(symbols, valid)
       end
     
       it 'completes loop and displays error message once' do
-        error_message = "Invalid entry. Please enter a valid coordinate."
+        error_message = "Invalid entry. Please try again."
         expect(game).to receive(:puts).with(error_message).once
         game.player_move
       end
@@ -236,12 +218,12 @@ describe Game do
       before do
         symbols = '@!'
         letters = 'ip'
-        valid = 'E2'
+        valid = 'E'
         allow(game).to receive(:gets).and_return(symbols, letters, valid)
       end
     
       it 'completes loop and displays error message twice' do
-        error_message = "Invalid entry. Please enter a valid coordinate."
+        error_message = "Invalid entry. Please try again."
         expect(game).to receive(:puts).with(error_message).twice
         game.player_move
       end
@@ -287,6 +269,48 @@ describe Game do
     end
   end
 
+  describe '#game_over?' do
+    let(:judge_grid) { instance_double(Grid) }
+
+    before do
+      allow(judge_grid).to receive(:four_in_a_row)
+      allow(judge_grid).to receive(:four_vertical)
+      allow(judge_grid).to receive(:four_diagonal)
+    end
+      
+    
+    context 'when red has 4 in a row' do
+      it 'returns true' do
+        game.instance_variable_set(:@grid, judge_grid)
+        allow(judge_grid).to receive(:four_in_a_row).and_return('🔴')
+        expect(game).to be_game_over
+      end
+    end
+
+    context 'when yellow has 4 in a column' do
+      it 'returns true' do
+        game.instance_variable_set(:@grid, judge_grid)
+        allow(judge_grid).to receive(:four_vertical).and_return('🟡')
+        expect(game).to be_game_over
+      end
+    end
+
+    context 'when yellow has 4 in a diagonal' do
+      it 'returns true' do
+        game.instance_variable_set(:@grid, judge_grid)
+        allow(judge_grid).to receive(:four_diagonal).and_return('🟡')
+        expect(game).to be_game_over
+      end
+    end
+
+    context 'when no one has 4 in a row, vertically, diagonally' do
+      it 'returns nil' do
+        game.instance_variable_set(:@grid, judge_grid)
+        expect(game).not_to be_game_over
+      end
+    end
+  end
+      
       
 end
 
