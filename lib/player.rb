@@ -6,5 +6,4 @@ class Player
   def initialize
     @color = nil
   end
-
 end

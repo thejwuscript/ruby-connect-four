@@ -44,7 +44,7 @@ class Game
   end
   
   def choose_color
-    puts "Player One, choose your color. Enter '1' for red or '2' for yellow."
+    puts "Player One, choose your color. Enter '1' for 🔴 or '2' for 🟡."
     loop do
       input = gets.chomp
       return input.to_i if /^[1-2]{1}$/.match?(input)
@@ -130,5 +130,4 @@ class Game
       puts "Thanks for playing."
     end
   end
-
 end

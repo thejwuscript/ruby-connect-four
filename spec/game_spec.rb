@@ -237,7 +237,7 @@ describe Game do
   describe '#choose_color' do
     context 'when player inputs 1 or 2' do   
       before do
-        prompt = "Player One, choose your color. Enter '1' for red or '2' for yellow."
+        prompt = "Player One, choose your color. Enter '1' for 🔴 or '2' for 🟡."
         allow(game).to receive(:puts).with(prompt)
       end
     
@@ -261,7 +261,7 @@ describe Game do
         three = '3'
         two = '2'
         allow(game).to receive(:gets).and_return(three, two)
-        prompt = "Player One, choose your color. Enter '1' for red or '2' for yellow."
+        prompt = "Player One, choose your color. Enter '1' for 🔴 or '2' for 🟡."
         allow(game).to receive(:puts).with(prompt).once
       end
     
@@ -314,8 +314,6 @@ describe Game do
       end
     end
   end
-      
-      
 end
 
   

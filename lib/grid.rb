@@ -76,15 +76,15 @@ class Grid
     nil
   end
 
-  def four_diagonal
+  def four_diagonal_right
     start_positions = [[2,0], [1,0], [0,0], [0,1], [0,2], [0,3]]
     start_positions.each do |elem|
-      return check_diagonal(elem) if check_diagonal(elem)
+      return check_diagonal_right(elem) if check_diagonal_right(elem)
     end
     nil
   end
 
-  def check_diagonal(element)
+  def check_diagonal_right(element)
     ary = []
     for i in 0..6
       a,b = element
@@ -96,4 +96,23 @@ class Grid
     ary.each_cons(4) {|a| return a[0] if a.all?('🔴') || a.all?('🟡') }
   end
 
+  def four_diagonal_left
+    start_positions = [[2,6], [1,6], [0,6], [0,5], [0,4], [0,3]]
+    start_positions.each do |elem|
+      return check_diagonal_left(elem) if check_diagonal_left(elem)
+    end
+    nil
+  end
+
+  def check_diagonal_left(element)
+    ary = []
+    for i in 0..5
+      a,b = element
+      a = a + i
+      b = b - i
+      next if a > 5 || b < 0
+      ary << slots_layout[a][b]
+    end
+    ary.each_cons(4) {|a| return a[0] if a.all?('🔴') || a.all?('🟡') }
+  end
 end

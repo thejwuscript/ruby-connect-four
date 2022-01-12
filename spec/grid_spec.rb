@@ -2,20 +2,10 @@
 
 require_relative '../lib/grid'
 
+# rubocop:disable Metrics/BlockLength
+
 describe Grid do
   subject(:grid) { described_class.new }
-  
-  #describe '#update_slots' do
-  #  it 'updates grid with given coordinate and color' do
-  #    color = '🔴'
-  #    coordinate = 'B3'
-  #    grid_position = [-3, 1]
-  #    allow(grid).to receive(:input_to_grid_position).with(coordinate).and_return([grid_position)
-  #    grid.update_slots(color, coordinate)
-  #    updated = @slots_layout[-3][1]
-  #    expect(updated).to eq('🔴')
-  #  end  
-  #end
 
   describe '#input_to_grid_position' do
     it 'converts B3 as an argument into a two-element array' do
@@ -143,42 +133,79 @@ describe Grid do
     end
   end
 
-  describe '#four_diagonal' do
-    context 'if there are four colors diagonally' do
-      subject(:reds_diagonal) { described_class.new }
+  describe '#four_diagonal_right' do
+    context 'if there are four colors diagonally to the right' do
+      subject(:reds_diagonal_right) { described_class.new }
       
       it 'returns the color' do
         for i in 0..3 do
-          reds_diagonal.slots_layout[1+i][0+i] = '🔴'
+          reds_diagonal_right.slots_layout[1+i][0+i] = '🔴'
         end
-        result = reds_diagonal.four_diagonal
+        result = reds_diagonal_right.four_diagonal_right
         expect(result).to eq('🔴')
       end
     end
 
     context 'if mixed colors diagonally' do
-      subject(:colors_diagonal) { described_class.new }
+      subject(:colors_diagonal_right) { described_class.new }
       
       it 'returns nil' do
         for i in 0..2 do
-          colors_diagonal.slots_layout[0+i][2+i] = '🔴'
+          colors_diagonal_right.slots_layout[0+i][2+i] = '🔴'
         end
-        colors_diagonal.slots_layout[3][5] = '🟡'
-        result = colors_diagonal.four_diagonal
+        colors_diagonal_right.slots_layout[3][5] = '🟡'
+        result = colors_diagonal_right.four_diagonal_right
         expect(result).to be_nil
       end
     end
 
     context 'if mixed spaces and colors diagonally' do
-      subject(:mixed_diagonal) { described_class.new }
+      subject(:mixed_diagonal_right) { described_class.new }
       
       it 'returns nil' do
-        mixed_diagonal.slots_layout[2][1] = '🔴'
-        mixed_diagonal.slots_layout[4][3] = '🟡'
-        result = mixed_diagonal.four_diagonal
+        mixed_diagonal_right.slots_layout[2][1] = '🔴'
+        mixed_diagonal_right.slots_layout[4][3] = '🟡'
+        result = mixed_diagonal_right.four_diagonal_right
         expect(result).to be_nil
       end
     end
   end
 
+  describe '#four_diagonal_left' do
+    context 'if there are four colors diagonally to the left' do
+      subject(:reds_diagonal_left) { described_class.new }
+      
+      it 'returns the color' do
+        for i in 0..3
+          reds_diagonal_left.slots_layout[i][5-i] = '🔴'
+        end
+        result = reds_diagonal_left.four_diagonal_left
+        expect(result).to eq('🔴')
+      end
+    end
+
+    context 'if mixed colors diagonally' do
+      subject(:colors_diagonal_left) { described_class.new }
+      
+      it 'returns nil' do
+        for i in 0..2
+          colors_diagonal_left.slots_layout[i][6-i] = '🔴'
+        end
+        colors_diagonal_left.slots_layout[3][3] = '🟡'
+        result = colors_diagonal_left.four_diagonal_left
+        expect(result).to be_nil 
+      end
+    end
+
+    context 'if mixed spaces and colors diagonally' do
+      subject(:mixed_diagonal_left) { described_class.new }
+      
+      it 'returns nil' do
+        mixed_diagonal_left.slots_layout[1][6] = '🔴'
+        mixed_diagonal_left.slots_layout[3][4] = '🟡'
+        result = mixed_diagonal_left.four_diagonal_left
+        expect(result).to be_nil
+      end
+    end
+  end
 end
